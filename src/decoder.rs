@@ -241,7 +241,11 @@ impl Decoder {
             let y = err_eval_rev.eval(Xi_inv);
             let y = gf::mul(gf::pow(*Xi, 1), y);
 
-            let magnitude = gf::div(y, err_loc_prime);
+            let magnitude = if err_loc_prime == 0 {
+                0
+            } else {
+                gf::div(y, err_loc_prime)
+            };
 
             let E_index = uncheck!(err_pos[i]) as usize;
             uncheck_mut!(E[E_index]) = magnitude;
